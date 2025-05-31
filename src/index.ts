@@ -6,18 +6,26 @@ interface AuthenticatedRequest extends Request {
   user?: string | JwtPayload;
 }
 
-export function createAuthMiddleware(secretKey: string) {
+export function createAuthMiddleware(
+  secretKey: string,
+  isBlacklistedFn?: (token: string) => Promise<boolean>
+) {
   if (!secretKey) throw new Error("JWT secret key is required");
 
-  const authenticateUser = (
+  const authenticateUser = async (
     req: Request,
     res: Response,
     next: NextFunction
-  ): void => {
+  ): Promise<void> => {
     const token = req.header("Authorization")?.split(" ")[1];
 
     if (!token) {
       res.status(401).json({ message: "Access denied. No token provided." });
+      return;
+    }
+
+    if (isBlacklistedFn && (await isBlacklistedFn(token))) {
+      res.status(401).json({ message: "Token is blacklisted" });
       return;
     }
 
