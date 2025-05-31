@@ -1,6 +1,6 @@
 {
   "name": "@sanmay-sam/auth-middleware",
-  "version": "1.0.0",
+  "version": "1.1.0",
   "description": "Checking for authentication tokens and creating",
   "main": "index.js",
   "scripts": {
