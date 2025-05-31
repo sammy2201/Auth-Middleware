@@ -1,0 +1,15 @@
+# Ignore node_modules folder
+node_modules/
+
+# Optional: ignore log files
+*.log
+
+# Optional: ignore environment files
+.env
+
+# Optional: ignore build/dist folders (adjust if needed)
+dist/
+build/
+
+# Ignore npm debug files
+npm-debug.log*
