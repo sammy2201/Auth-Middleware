@@ -77,11 +77,37 @@ To use this in your routes, cast `req`:
 (req as AuthenticatedRequest).user;
 ```
 
+### Logout Endpoint Example
+
+This example shows how to implement a logout route that blacklists JWT tokens using Redis:
+
+````ts
+import { Request, Response } from "express";
+
+export const logout = async (req: Request, res: Response): Promise<void> => {
+  try {
+    if (!req.headers.authorization?.startsWith("Bearer ")) {
+      res.status(401).json({ message: "Missing or invalid token" });
+      return;
+    }
+    if (req.headers.authorization) {
+      const token = req.headers.authorization.split(" ")[1];
+      const expiresIn = 3600; // 1 hour
+      await redis.setex(token, expiresIn, "blacklisted");
+      res.status(200).json({ message: "Logged out successfully" });
+    }
+  } catch (error) {
+    console.error("Error in logging out:", error);
+    res.status(500).json({ message: "Error in logging out" });
+  }
+};
+```
+
 ## Example Controller/Router Setup
 
 ```ts
 router.post("/set-new-password", authenticateUser, forgetPassword);
-```
+````
 
 ## ⚙️ Environment Variables
 
