@@ -1,11 +1,20 @@
 {
   "name": "@sanmay-sam/auth-middleware",
-  "version": "1.4.0",
+  "version": "1.4.1",
   "description": "Checking for authentication tokens and creating",
   "main": "dist/index.js",
   "types": "dist/index.d.ts",
   "files": [
     "dist"
+  ],
+  "keywords": [
+    "express",
+    "middleware",
+    "auth",
+    "authentication",
+    "jwt",
+    "token",
+    "nodejs"
   ],
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
